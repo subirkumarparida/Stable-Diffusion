@@ -1,45 +1,41 @@
 model:
-  base_learning_rate: 2.0e-06
+  base_learning_rate: 1.0e-06
   target: ldm.models.diffusion.ddpm.LatentDiffusion
   params:
     linear_start: 0.0015
-    linear_end: 0.0195
-    num_timesteps_cond: 1
-    log_every_t: 200
+    linear_end: 0.0155
+    log_every_t: 100
     timesteps: 1000
+    loss_type: l2
     first_stage_key: image
-    cond_stage_key: caption
+    cond_stage_key: LR_image
     image_size: 64
     channels: 3
-    cond_stage_trainable: true
-    conditioning_key: crossattn
-    monitor: val/loss_simple_ema
+    concat_mode: true
+    cond_stage_trainable: false
     unet_config:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
       params:
         image_size: 64
-        in_channels: 3
+        in_channels: 6
         out_channels: 3
-        model_channels: 192
+        model_channels: 160
         attention_resolutions:
+        - 16
         - 8
-        - 4
-        - 2
         num_res_blocks: 2
         channel_mult:
         - 1
         - 2
-        - 3
-        - 5
+        - 2
+        - 4
         num_head_channels: 32
-        use_spatial_transformer: true
-        transformer_depth: 1
-        context_dim: 640
     first_stage_config:
       target: ldm.models.autoencoder.VQModelInterface
       params:
         embed_dim: 3
         n_embed: 8192
+        monitor: val/rec_loss
         ddconfig:
           double_z: false
           z_channels: 3
@@ -57,21 +53,28 @@ model:
         lossconfig:
           target: torch.nn.Identity
     cond_stage_config:
-      target: ldm.modules.encoders.modules.BERTEmbedder
-      params:
-        n_embed: 640
-        n_layer: 32
+      target: torch.nn.Identity
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 28
-    num_workers: 10
+    batch_size: 64
     wrap: false
+    num_workers: 12
     train:
-      target: ldm.data.previews.pytorch_dataset.PreviewsTrain
+      target: ldm.data.openimages.SuperresOpenImagesAdvancedTrain
       params:
         size: 256
+        degradation: bsrgan_light
+        downscale_f: 4
+        min_crop_f: 0.5
+        max_crop_f: 1.0
+        random_crop: true
     validation:
-      target: ldm.data.previews.pytorch_dataset.PreviewsValidation
+      target: ldm.data.openimages.SuperresOpenImagesAdvancedValidation
       params:
         size: 256
+        degradation: bsrgan_light
+        downscale_f: 4
+        min_crop_f: 0.5
+        max_crop_f: 1.0
+        random_crop: true
