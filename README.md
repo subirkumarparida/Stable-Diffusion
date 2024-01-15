@@ -1,6 +1,6 @@
 # Stable-Diffusion
 
-##Error resolving Stable Diffusion Jupyter Notebook run:
+## Error resolving Stable Diffusion Jupyter Notebook run:
 ---------------------------------------------------------
 ### 1) No such file or directory: '/workspace/SD/configs/latent-diffusion/cin256-v2.yaml'
 	sys.path.append('latent-diffusion')
