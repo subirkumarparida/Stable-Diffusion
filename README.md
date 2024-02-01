@@ -29,10 +29,18 @@ CUDA_VISIBLE_DEVICES=0,1,3 python scripts/sample_diffusion.py -r models/ldm/cele
 ---------------------------------------------------------
 
 
+#### Train CelebA-HQ
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --base configs/latent-diffusion/celebahq-ldm-vq-4.yaml -t --gpus 0,
 ```
-
+#### Train Fairface
+```
+CUDA_VISIBLE_DEVICES=0 python main.py --base configs/latent-diffusion/fairfacebal-ldm-vq-4.yaml -t --gpus 0,
+```
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --base configs/latent-diffusion/fairfacebal-ldm-vq-4.yaml -t --gpus 0,1,2,3
+```
+### 0) pip install -e ./taming-transformers
 ### 1) modified main.py for rank_zero
 ### 2) pip install pytorch-lightning==1.06
 ### 3) Download vq-4 checkpointed model and unzip it
