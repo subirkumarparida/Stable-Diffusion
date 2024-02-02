@@ -1,33 +1,7 @@
 # Stable-Diffusion
 
-## Error resolving Stable Diffusion Jupyter Notebook run:
----------------------------------------------------------
-
-### Command to generate unconditional faces:
-```
-CUDA_VISIBLE_DEVICES=0,1,3 python scripts/sample_diffusion.py -r models/ldm/celeba256/model.ckpt -l 'models/ldm/' -n 3000 --batch_size 1 -c 20 -e 0.0
-```
-
-### 1) No such file or directory: '/workspace/SD/configs/latent-diffusion/cin256-v2.yaml'
-	sys.path.append('latent-diffusion')
-	
-	def get_model():
-    		config = OmegaConf.load("latent-diffusion/configs/latent-diffusion/cin256-v2.yaml")  
-    		model = load_model_from_config(config, "latent-diffusion/models/ldm/cin256-v2/model.ckpt")
-    		return model
-
-### 2) No module named 'pytorch_lightning.utilities.distributed'
-	from pytorch_lightning.utilities import rank_zero_only
-
-### 3) ModuleNotFoundError: No module named 'clip'	
-	pip install git+https://github.com/openai/CLIP.git
-
-### 4) ModuleNotFoundError: No module named 'kornia'
-	pip install kornia
-
 ## Error resolving main.py run:
 ---------------------------------------------------------
-
 
 #### Train CelebA-HQ
 ```
@@ -62,3 +36,29 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --base configs/latent-diffusion/fair
 	cd opt/conda/lib/python3.8/site-packages/pytorch_lightning/loops/
 	vi fit_loop.py
 		comment out those two lines containing error
+
+
+## Error resolving Stable Diffusion Jupyter Notebook run:
+---------------------------------------------------------
+
+### Command to generate unconditional faces:
+```
+CUDA_VISIBLE_DEVICES=0,1,3 python scripts/sample_diffusion.py -r models/ldm/celeba256/model.ckpt -l 'models/ldm/' -n 3000 --batch_size 1 -c 20 -e 0.0
+```
+
+### 1) No such file or directory: '/workspace/SD/configs/latent-diffusion/cin256-v2.yaml'
+	sys.path.append('latent-diffusion')
+	
+	def get_model():
+    		config = OmegaConf.load("latent-diffusion/configs/latent-diffusion/cin256-v2.yaml")  
+    		model = load_model_from_config(config, "latent-diffusion/models/ldm/cin256-v2/model.ckpt")
+    		return model
+
+### 2) No module named 'pytorch_lightning.utilities.distributed'
+	from pytorch_lightning.utilities import rank_zero_only
+
+### 3) ModuleNotFoundError: No module named 'clip'	
+	pip install git+https://github.com/openai/CLIP.git
+
+### 4) ModuleNotFoundError: No module named 'kornia'
+	pip install kornia
