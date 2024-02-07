@@ -11,6 +11,11 @@ CUDA_VISIBLE_DEVICES=0 python main.py --base configs/latent-diffusion/celebahq-l
 CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --base configs/latent-diffusion/celebahq-ldm-vq-4.yaml -t --no-test --gpus 0,1,2,3
 ```
 
+##### Resume training on CelebA-HQ MULTI-GPU
+```
+CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/latent-diffusion/celebahq-ldm-vq-4.yaml -t --no-test -r logs/resume-<name>/saved/<name>.ckpt --gpus 0,1
+```
+
 ##### Test on CelebA-HQ
 ```
 CUDA_VISIBLE_DEVICES=0,1,3 python scripts/sample_diffusion.py -r models/ldm/celeba256/model.ckpt -l 'models/ldm/' -n 3000 --batch_size 1 -c 20 -e 0.0
@@ -27,6 +32,11 @@ CUDA_VISIBLE_DEVICES=0 python main.py --base configs/latent-diffusion/fairfaceba
 ##### Train on FairFace_224 MULTI-GPU
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --base configs/latent-diffusion/fairfacebal-ldm-vq-4.yaml -t --no-test --gpus 0,1,2,3
+```
+
+##### Resume training on FairFace_224 MULTI-GPU
+```
+CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/latent-diffusion/fairfacebal-ldm-vq-4.yaml -t --no-test -r logs/resume-<name>/saved/<name>.ckpt --gpus 0,1
 ```
 
 ##### Test on FairFace_224
